@@ -18,7 +18,7 @@ namespace lab4_5
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+           // Application.Run(new Form1());
             using (var context = new BookStore())
             {
                 Category category1 = new Category()
@@ -74,12 +74,12 @@ namespace lab4_5
                     Name = "Mask",
                     Books = new List<Book>
                 {
-                    book1,
+                    book3,
                 }
                 };
                 context.Authors.Add(author);
-                //one to many proof
-                // context.Authors.Add(author2);
+                 context.Authors.Add(author2);
+
                 context.Dates.Add(new BookReleaseDate() { BookId = 1,Year="1994" }); 
 ;                context.Dates.Add(new BookReleaseDate() { BookId = 2, Year = "2000" });
 ;                context.Dates.Add(new BookReleaseDate() { BookId = 3, Year = "2001" });
@@ -91,13 +91,14 @@ namespace lab4_5
 
                 
 
-                List<User> users = new List<User>();
-                users.Add(new User("e1", 23, new List<string> { "ua", "en" }));
-                users.Add(new User("e2", 56, new List<string> { "ru", "en" }));
-                users.Add(new User("e3", 8, new List<string> { "ua", "ch" }));
-                users.Add(new User("e4", 40, new List<string> { "ua", "en" }));
+                //List<User> users = new List<User>();
+                //users.Add(new User("e1", 23, new List<string> { "ua", "en" }));
+                //users.Add(new User("e2", 56, new List<string> { "ru", "en" }));
+                //users.Add(new User("e3", 8, new List<string> { "ua", "ch" }));
+                //users.Add(new User("e4", 40, new List<string> { "ua", "en" }));
 
-                users.Where(u => u.Age < 30 && u.Languages.Contains("en")).ToList().ForEach(u=>Debug.WriteLine(u.Name));
+                //users.Where(u => u.Age < 30 && u.Languages.Contains("en")).ToList().ForEach(u=>Debug.WriteLine(u.Name));
+
                 var group = context.Books.GroupBy(b => b.Author.Name).ToList();
                 group.ToList().ForEach(g => g.ToList()
                                              .ForEach(record => Debug.WriteLine("book: {0} , author: {1}", record.Title, record.Author.Name)));
@@ -116,6 +117,7 @@ namespace lab4_5
 
                 var cnt = context.Books.Where(i => i.Title.Contains("My")).Count();
                 Debug.WriteLine(cnt);
+
 
 
             }
