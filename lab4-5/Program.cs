@@ -80,7 +80,7 @@ namespace lab4_5
                 context.Authors.Add(author);
                  context.Authors.Add(author2);
 
-                context.Dates.Add(new BookReleaseDate() { BookId = 1,Year="1994" }); 
+                context.Dates.Add(new BookReleaseDate() { BookId = 1,Year="2094" }); 
 ;                context.Dates.Add(new BookReleaseDate() { BookId = 2, Year = "2000" });
 ;                context.Dates.Add(new BookReleaseDate() { BookId = 3, Year = "2001" });
 
@@ -114,6 +114,11 @@ namespace lab4_5
 
                 var excep = context.Dates.Where(o => o.Year == "1994").Except(context.Dates.Where(i => i.Year == "2001"));
                 excep.ToList().ForEach(i => Debug.WriteLine(i.Year));
+
+                var sorted = context.Dates.Join(context.Books, d => d.BookId, b => b.BookId, (d, b) => new { Book = b.Title, Year = d.Year })
+                    .OrderBy(u=>u.Year);
+                Debug.WriteLine("sorted");
+                sorted.ToList().ForEach(u => Debug.WriteLine($"{u.Book} : {u.Year}"));
 
                 var cnt = context.Books.Where(i => i.Title.Contains("My")).Count();
                 Debug.WriteLine(cnt);
